@@ -77,7 +77,13 @@ class AuthorController extends Controller
 
     public function delete($id)
     {
-        Author::findOrFail($id)->delete();
-        return response('Deleted Successfully', 200);
+        if(Author::find($id)->delete()){
+            return $this->customResponse('Author deleted successfully!', 410);
+        }
+    }
+
+    public function customResponse($message = 'success', $status = 200)
+    {
+        return response(['status' =>  $status, 'message' => $message], $status);
     }
 }

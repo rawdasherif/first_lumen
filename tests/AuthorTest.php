@@ -96,6 +96,16 @@ class ProductTest extends TestCase
             ]    
         );
     }
+
+    public function testShouldDeleteAuthor(){
+        
+        $this->delete("api/authors/4", [], []);
+        $this->seeStatusCode(410);
+        $this->seeJsonStructure([
+                'status',
+                'message'
+        ]);
+    }
    
 
 
