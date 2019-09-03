@@ -45,7 +45,14 @@ class ArticalController extends Controller
 
     public function create(Request $request)
     {
-        $artical = Artical::create($request->all());
+
+        if($request['image']){
+            $iName = time().'_'.$request['image']->getClientOriginalName();
+            $request['image']->move(('images'), $iName);
+            return Artical::create($request->except('image') + ['image' => $iName]);
+        } else{
+            return Artical::create($request->all());
+        }
 
         return response()->json($artical, 201);
     }
@@ -53,9 +60,17 @@ class ArticalController extends Controller
     public function update($id, Request $request)
     {
         $artical = Artical::findOrFail($id);
-        $artical->update($request->all());
+        // $artical->update($request->all());
+        if($request['image']){
+            $iName = time().'_'.$request['image']->getClientOriginalName();
+            $request['image']->move(('images'), $iName);
+            $artical->update($request->except('image') + ['image' => $iName]);
+        } else{
+            $artical->update($request->all());
+        }
 
-        return response()->json($artical, 200);
+        return response()->json($artical, 201);
+
     }
 
     public function delete($id)
