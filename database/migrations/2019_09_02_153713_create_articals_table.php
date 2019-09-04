@@ -19,7 +19,7 @@ class CreateArticalsTable extends Migration
             $table->string('main_title');
             $table->string('secondary_title');
             $table->string('content');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->unsignedBigInteger('author_id');
 
         });
