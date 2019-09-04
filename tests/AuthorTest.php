@@ -1,5 +1,5 @@
 <?php
-class ProductTest extends TestCase
+class AuthorTest extends TestCase
 {
     public function testShouldReturnAllAuthors(){
         $this->get("api/authors", []);
