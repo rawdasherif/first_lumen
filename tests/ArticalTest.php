@@ -1,12 +1,15 @@
 <?php
+
+ use Illuminate\Http\UploadedFile;
+ use Illuminate\Support\Facades\Storage;
+
 class ArticalTest extends TestCase
 {
     public function testShouldReturnAllArticals(){
         $this->get("api/articals", []);
         $this->seeStatusCode(200);
         $this->seeJsonStructure([
-            'data' => [
-              
+            'data' => [      
                 'main_title',
                 'secondary_title',
                 'content',
@@ -20,8 +23,7 @@ class ArticalTest extends TestCase
                     'latest_article_published',
                     'created_at',
                     'updated_at',
-                    ]
-            
+                    ]        
             ]
         ]    
      
@@ -33,8 +35,7 @@ class ArticalTest extends TestCase
         $this->get("api/articals/4", []);
         $this->seeStatusCode(200);
         $this->seeJsonStructure([
-            'data' => [
-              
+            'data' => [           
                     'main_title',
                     'secondary_title',
                     'content',
@@ -57,11 +58,14 @@ class ArticalTest extends TestCase
     }
 
     public function testShouldCreateArtical(){
+
+        Storage::fake('local');
+        $file = UploadedFile::fake()->image('avatar.jpg');
         $parameters = [
                     'main_title'=> 'mssssss',
                     'secondary_title'=>'mohamedaaaa',
                     'content'=>'bassss',
-                    'image'=>'12344557_asadadadaddada.jpg',
+                    'image'=>$file,
                     'author_id'=>1,
 
         ];
