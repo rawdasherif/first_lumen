@@ -1,110 +1,37 @@
 <?php
+
 class AuthorTest extends TestCase
 {
     public function testShouldReturnAllAuthors(){
-        $this->get("api/authors", []);
-        $this->seeStatusCode(200);
-        $this->seeJsonStructure([
-            'data' => ['*' =>
-                [
-                    'name',
-                    'email',
-                    'location',
-                    'github',
-                    'twitter',
-                    'latest_article_published',
-                    'created_at',
-                    'updated_at',
-                ]
-            ]    
-        ]);
+        $response=$this->get("api/authors", []);
+        $this->assertEquals(200, $this->response->status());
 
     }
 
     public function testShouldReturnAuthor(){
-        $this->get("api/authors/1", []);
-        $this->seeStatusCode(200);
-        $this->seeJsonStructure([
-            'data' => ['*' =>
-                [
-                    'name',
-                    'email',
-                    'location',
-                    'github',
-                    'twitter',
-                    'latest_article_published',
-                    'created_at',
-                    'updated_at',
-                ]
-            ]    
-        ]);
+        $response=$this->get("api/authors/1", []);
+        $this->assertEquals(200, $this->response->status());
            
     }
 
     public function testShouldCreateAuthor(){
-        $parameters = [
-                    'name'=> 'mohamed',
-                    'email'=>'mohamed@gmail.com',
-                    'location'=>'bolkly',
-                    'github'=>'mohamedadel',
-                    'twitter'=>'mohamedadeltwitter',
-                    'latest_article_published'=>'ddsfadf',
-
-        ];
-        $this->post("api/authors", $parameters, []);
-        $this->seeStatusCode(200);
-        $this->seeJsonStructure(
-            ['data' =>
-                [
-                    'name',
-                    'email',
-                    'location',
-                    'github',
-                    'twitter',
-                    'latest_article_published',
-                    'created_at',
-                    'updated_at',
-                ]
-            ]    
-        );
+        $author = factory('App\Author')->make();    
+        $response=$this->post("api/authors", $author->toArray(), []);
+        $this->assertEquals(200, $this->response->status());
         
     }
 
     public function testShouldUpdateAuthor(){
-        $parameters = [
-            'name' => 'samar',
-            'email'=>'samar@gmail.com',
-            'location'=>'bolkly',
-            'github'=>'samaradel',
-            'twitter'=>'samaradeltwitter',
-            'latest_article_published'=>'ddsfassdf',
-        ];
-        $this->put("api/authors/2", $parameters, []);
-        $this->seeStatusCode(200);
-        $this->seeJsonStructure(
-            ['data' =>
-                [
-                    'name',
-                    'email',
-                    'location',
-                    'github',
-                    'twitter',
-                    'latest_article_published',
-                    'created_at',
-                    'updated_at',
-                ]
-            ]    
-        );
+        $author = factory('App\Author')->make(); 
+        $response=$this->put("api/authors/2",$author->toArray(), []);
+        $this->assertEquals(200, $this->response->status());
+     
     }
 
     public function testShouldDeleteAuthor(){
         
-        $this->delete("api/authors/4", [], []);
-        $this->seeStatusCode(410);
-        $this->seeJsonStructure([
-                'status',
-                'message'
-        ]);
+        $response=$this->delete("api/authors/41", [], []);
+         $this->assertEquals(410, $this->response->status());
     }
    
 
