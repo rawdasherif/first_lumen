@@ -27,7 +27,7 @@ class ArticalController extends Controller
         $this->articalTransformer = $articalTransformer;
     }
 
-    public function show()
+    public function index()
     {
         $articals=Artical::all();
 
@@ -38,7 +38,7 @@ class ArticalController extends Controller
         return $articals->toArray(); // Get transformed array of data
     }
 
-    public function showOne($id)
+    public function show($id)
     {
         $artical=Artical::find($id);
         $artical = new Item($artical,$this->articalTransformer); 
@@ -48,7 +48,7 @@ class ArticalController extends Controller
        
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $this->validate($request, [
             'main_title' => 'required|max:255',

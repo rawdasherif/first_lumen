@@ -14,27 +14,29 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
-$router->group(['prefix' => 'api'], function () use ($router) {
-    $router->get('authors',  ['uses' => 'AuthorController@showAllAuthors']);
+$router->group(['prefix' => 'api','middleware' => 'auth:api'], function () use ($router) {
+    $router->get('authors',  ['uses' => 'AuthorController@index']);
   
-    $router->get('authors/{id}', ['uses' => 'AuthorController@showOneAuthor']);
+    $router->get('authors/{id}', ['uses' => 'AuthorController@show']);
   
-    $router->post('authors', ['uses' => 'AuthorController@create']);
+    $router->post('authors', ['uses' => 'AuthorController@store']);
   
     $router->delete('authors/{id}', ['uses' => 'AuthorController@delete']);
   
     $router->put('authors/{id}', ['uses' => 'AuthorController@update']);
+    $router->post('login', 'AuthorController@login');
   });
 
   $router->group(['prefix' => 'api'], function () use ($router) {
-    $router->get('articals',  ['uses' => 'ArticalController@show']);
+    $router->get('articals',  ['uses' => 'ArticalController@index']);
   
-    $router->get('articals/{id}', ['uses' => 'ArticalController@showOne']);
+    $router->get('articals/{id}', ['uses' => 'ArticalController@show']);
   
-    $router->post('articals', ['uses' => 'ArticalController@create']);
+    $router->post('articals', ['uses' => 'ArticalController@store']);
   
     $router->delete('articals/{id}', ['uses' => 'ArticalController@delete']);
   
     $router->put('articals/{id}', ['uses' => 'ArticalController@update']);
   });
+
 

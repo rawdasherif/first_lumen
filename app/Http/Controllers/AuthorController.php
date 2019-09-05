@@ -8,6 +8,7 @@ use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use App\Transformers\AuthorTransformer;
+use Tymon\JWTAuth\JWTAuth;
 
 class AuthorController extends Controller
 {
@@ -21,14 +22,52 @@ class AuthorController extends Controller
      */
     private $authorTransformer;
 
-    function __construct(Manager $fractal, AuthorTransformer  $authorTransformer)
+     /**
+     * @var \Tymon\JWTAuth\JWTAuth
+     */
+    protected $jwt;
+
+    function __construct(Manager $fractal, AuthorTransformer  $authorTransformer,JWTAuth $jwt)
     {
         $this->fractal = $fractal;
         $this->authorTransformer = $authorTransformer;
+        $this->jwt = $jwt;
     }
 
+    public function login(Request $request)
+    {
+        $this->validate($request, [
+            'email'    => 'required|email|max:255',
+            'password' => 'required',
+        ]);
 
-    public function showAllAuthors()
+        try {
+
+            if (! $token = $this->jwt->attempt($request->only('email','password'))) {
+                return response()->json(['author_not_found'], 404);
+            }
+
+        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+
+            return response()->json(['token_expired'], 500);
+
+        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+
+            return response()->json(['token_invalid'], 500);
+
+        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+
+            return response()->json(['token_absent' => $e->getMessage()], 500);
+
+        }
+
+        return response()->json(compact('token'));
+     }
+
+    
+
+
+    public function index()
     {
         $authors=Author::all();
 
@@ -38,7 +77,7 @@ class AuthorController extends Controller
         return $authors->toArray(); // Get transformed array of data
     }
 
-    public function showOneAuthor($id)
+    public function show($id)
     {
         $author=Author::find($id);
         
@@ -48,7 +87,7 @@ class AuthorController extends Controller
        
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $this->validate($request, [
             'name' => 'required|max:255',

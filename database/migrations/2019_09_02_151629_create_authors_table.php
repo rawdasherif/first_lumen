@@ -18,6 +18,7 @@ class CreateAuthorsTable extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('email');
+            $table->string('password');
             $table->string('github');
             $table->string('twitter');
             $table->string('location');
