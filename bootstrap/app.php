@@ -24,6 +24,7 @@ $app = new Laravel\Lumen\Application(
 $app->withFacades();
 
 $app->withEloquent();
+$app->configure('swagger-lume');
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +80,7 @@ $app->routeMiddleware([
 $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+$app->register(\SwaggerLume\ServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -97,5 +99,6 @@ $app->router->group([
     require __DIR__.'/../routes/web.php';
 });
 $app->configure('auth');
+
 return $app;
 

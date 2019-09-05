@@ -9,8 +9,51 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+
+/**
+ * @OA\Schema(@OA\Xml(name="Author"))
+ */
 class Author extends Model  implements JWTSubject, AuthenticatableContract, AuthorizableContract
 {
+
+    /**
+     * @OA\Property()
+     * @var string
+     */
+    public $name;
+    /**
+     * @OA\Property()
+     * @var string
+     */
+    public $email;
+       /**
+     * @OA\Property()
+     * @var string
+     */
+    public $password;
+     /**
+     * @OA\Property()
+     * @var string
+     */
+    public $github;
+   /**
+     * @OA\Property()
+     * @var string
+     */
+    public $twitter;
+   /**
+     * @OA\Property()
+     * @var string
+     */
+    public $location;
+     /**
+     * @OA\Property()
+     * @var string
+     */
+    public $latest_article_published;
+  
+  
+  
  
     use Authenticatable, Authorizable;
     /**

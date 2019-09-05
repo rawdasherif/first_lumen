@@ -26,6 +26,20 @@ class ArticalController extends Controller
         $this->fractal = $fractal;
         $this->articalTransformer = $articalTransformer;
     }
+    //----------------------------------------------- 
+    /**
+     * @OA\Get(
+     *   path="api/articals",
+     *   tags={"Article"},
+     *   summary="list articles",
+     *   parameters={},
+     *   @OA\Response(
+     *     response=200,
+     *     description="A list with articals"
+     *   ),
+     *   @OA\Response(response="default",description="an ""unexpected"" error")
+     * )
+     */
 
     public function index()
     {
@@ -37,6 +51,31 @@ class ArticalController extends Controller
 
         return $articals->toArray(); // Get transformed array of data
     }
+    //----------------------------------------------- 
+    /**
+     * @OA\Get(
+     *   path="api/articals/{articleID}",
+     *   tags={"Article"},
+     *   summary="Find aericle by ID",
+     *   @OA\Parameter(
+     *     name="articleId",
+     *     in="path",
+     *     description="ID of article that needs to be fetched",
+     *     required=true,
+     *     @OA\Schema(
+     *         type="integer",
+     *         format="int64",
+     *     )
+     *   ),
+     *   @OA\Response(
+     *     response=200,
+     *     description="successful operation"
+     *   ),
+     *   @OA\Response(response=500,description="Internal server error"),
+     *   @OA\Response(response=400, description="Invalid ID supplied"),
+     *   @OA\Response(response=404, description="Article not found")
+     * )
+     */
 
     public function show($id)
     {
@@ -47,6 +86,27 @@ class ArticalController extends Controller
         return $artical->toArray(); // Get transformed array of data
        
     }
+      //-------------------------------------------------
+     /**
+     * @OA\Post(
+     *   path="api/articals",
+     *   tags={"Article"},
+     *   summary="add new article",
+     *   operationId="addArticle",
+     *   @OA\RequestBody(
+     *       required=true,
+     *       @OA\JsonContent(ref="#/components/schemas/Artical")
+     *   ),
+     *   @OA\Response(
+     *     response=200,
+     *     description="Article added successfuly"
+     *   ),
+     *   @OA\Response(
+     *     response="default",
+     *     description="an ""unexpected"" error"
+     *   )
+     * )
+     */
 
     public function store(Request $request)
     {
@@ -70,6 +130,35 @@ class ArticalController extends Controller
         return $artical->toArray(); 
     }
 
+       //-----------------------------------------------
+    /**
+     * @OA\Put(
+     *   path="api/articals/{articleID}",
+     *   tags={"Article"},
+     *   summary="Update data for rticle",
+     *   operationId="updateArticle",
+     *   @OA\Parameter(
+     *     name="articleId",
+     *     in="path",
+     *     description="ID of article that needs to be update",
+     *     required=true,
+     *     @OA\Schema(
+     *         type="integer",
+     *         format="int64",
+     *     )
+     *   ),
+     *   @OA\RequestBody(
+     *       required=true,
+     *        @OA\JsonContent(ref="#/components/schemas/Artical")
+     *   ),
+     *   @OA\Response(
+     *     response=200,
+     *     description="Article added successsfuly"
+     *   ),
+     *    @OA\Response(response="default",description="an ""unexpected"" error")
+     * )
+     */
+
     public function update($id, Request $request)
     {
         $artical = Artical::findOrFail($id);
@@ -87,6 +176,27 @@ class ArticalController extends Controller
         return $artical->toArray(); 
 
     }
+     //-------------------------------------------
+    /**
+     * @OA\Delete(
+     *   path="api/articals/{articleID}",
+     *   tags={"Article"},
+     *   summary="Delete an article",
+     *   operationId="DeleteArticle",
+     *   @OA\Parameter(
+     *     name="authorId",
+     *     in="path",
+     *     description="ID of article that needs to be update",
+     *     required=true,
+     *     @OA\Schema(
+     *         type="integer",
+     *         format="int64",
+     *     )
+     *   ),
+     *   @OA\Response(response=400, description="Invalid "),
+     *   @OA\Response(response=404, description="Article not found")
+     * )
+     */
 
     public function delete($id)
     {

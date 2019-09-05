@@ -3,9 +3,38 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+/**
+ * @OA\Schema(@OA\Xml(name="Artical"))
+ */
 class Artical extends Model
 {
+
+    /**
+     * @OA\Property()
+     * @var string
+     */
+    public $main_title;
+    /**
+     * @OA\Property()
+     * @var string
+     */
+    public $secondary_title;
+       /**
+     * @OA\Property()
+     * @var string
+     */
+    public $content;
+     /**
+     * @OA\Property()
+     * @var string
+     */
+    public $image;
+   /**
+     * @OA\Property(format="int64")
+     * @var int
+     */
+    public $author_id;
+
     
 
     /**

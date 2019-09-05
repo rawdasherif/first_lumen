@@ -34,6 +34,41 @@ class AuthorController extends Controller
         $this->authorTransformer = $authorTransformer;
         $this->jwt = $jwt;
     }
+    //---------------------------------------------------------
+    /**
+     * @OA\Get(
+     * path="/login",
+     *   tags={"Author Login"},
+     *   summary="Logs author into the system",
+     *   description="",
+     *   operationId="loginAuthor",
+     *   @OA\Parameter(
+     *     name="email",
+     *     required=true,
+     *     in="query",
+     *     description="The user email for login",
+     *     required=true,
+     *     @OA\Schema(
+     *         type="string"
+     *     )
+     *   ),
+     *   @OA\Parameter(
+     *     name="password",
+     *     in="query",
+     *     @OA\Schema(
+     *         type="string",
+     *     ),
+     *     description="The user password for login", 
+     *     required=true,
+     *   ),
+     *   @OA\Response(
+     *     response=200,
+     *     description="successful operation",
+     *   ),
+     *   @OA\Response(response=400, description="Invalid email/password supplied")
+     * )
+     */
+
 
     public function login(Request $request)
     {
@@ -64,10 +99,21 @@ class AuthorController extends Controller
 
         return response()->json(compact('token'));
      }
-
-    
-
-
+    //----------------------------------------------- 
+    /**
+     * @OA\Get(
+     *   path="api/authors",
+     *   tags={"Author"},
+     *   summary="list authors",
+     *   parameters={},
+     *   @OA\Response(
+     *     response=200,
+     *     description="A list with authors"
+     *   ),
+     *   @OA\Response(response="default",description="an ""unexpected"" error")
+     * )
+     */
+        
     public function index()
     {
         $authors=Author::all();
@@ -77,7 +123,32 @@ class AuthorController extends Controller
 
         return $authors->toArray(); // Get transformed array of data
     }
-
+    //----------------------------------------------- 
+    /**
+     * @OA\Get(
+     *   path="api/authors/{authorID}",
+     *   tags={"Author"},
+     *   summary="Find author by ID",
+     *   @OA\Parameter(
+     *     name="authorId",
+     *     in="path",
+     *     description="ID of author that needs to be fetched",
+     *     required=true,
+     *     @OA\Schema(
+     *         type="integer",
+     *         format="int64",
+     *     )
+     *   ),
+     *   @OA\Response(
+     *     response=200,
+     *     description="successful operation"
+     *   ),
+     *   @OA\Response(response=500,description="Internal server error"),
+     *   @OA\Response(response=400, description="Invalid ID supplied"),
+     *   @OA\Response(response=404, description="Author not found")
+     * )
+     */
+       
     public function show($id)
     {
         $author=Author::find($id);
@@ -87,6 +158,27 @@ class AuthorController extends Controller
         return $author->toArray(); // Get transformed array of data
        
     }
+    //-------------------------------------------------
+     /**
+     * @OA\Post(
+     *   path="/authors",
+     *   tags={"Author"},
+     *   summary="add new author",
+     *   operationId="addAuthor",
+     *   @OA\RequestBody(
+     *       required=true,
+     *       @OA\JsonContent(ref="#/components/schemas/Author")
+     *   ),
+     *   @OA\Response(
+     *     response=200,
+     *     description="Author added successfuly"
+     *   ),
+     *   @OA\Response(
+     *     response="default",
+     *     description="an ""unexpected"" error"
+     *   )
+     * )
+     */
 
     public function store(Request $request)
     {
@@ -102,6 +194,35 @@ class AuthorController extends Controller
         return $author->toArray(); 
 
     }
+    //-----------------------------------------------
+    /**
+     * @OA\Put(
+     *   path="api/authors/{authorID}",
+     *   tags={"Author"},
+     *   summary="Update data for author",
+     *   operationId="updateAuthor",
+     *   @OA\Parameter(
+     *     name="authorId",
+     *     in="path",
+     *     description="ID of author that needs to be update",
+     *     required=true,
+     *     @OA\Schema(
+     *         type="integer",
+     *         format="int64",
+     *     )
+     *   ),
+     *   @OA\RequestBody(
+     *       required=true,
+     *       @OA\JsonContent(ref="#/components/schemas/Author")
+     *   ),
+     *   @OA\Response(
+     *     response=200,
+     *     description="Author added successsfuly"
+     *   ),
+     *    @OA\Response(response="default",description="an ""unexpected"" error")
+     * )
+     */
+
 
     public function update($id, Request $request)
     {
@@ -115,6 +236,28 @@ class AuthorController extends Controller
         $author = $this->fractal->createData($author);
         return $author->toArray(); 
     }
+    //-------------------------------------------
+    /**
+     * @OA\Delete(
+     *   path="api/authors/{authorID}",
+     *   tags={"Author"},
+     *   summary="Delete an author",
+     *   operationId="DeleteAuthor",
+     *   @OA\Parameter(
+     *     name="authorId",
+     *     in="path",
+     *     description="ID of author that needs to be update",
+     *     required=true,
+     *     @OA\Schema(
+     *         type="integer",
+     *         format="int64",
+     *     )
+     *   ),
+     *   @OA\Response(response=400, description="Invalid "),
+     *   @OA\Response(response=404, description="Author not found")
+     * )
+     */
+
 
     public function delete($id)
     {
