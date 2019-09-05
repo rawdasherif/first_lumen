@@ -9,6 +9,7 @@ use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use App\Transformers\AuthorTransformer;
 use Tymon\JWTAuth\JWTAuth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthorController extends Controller
 {
@@ -92,9 +93,10 @@ class AuthorController extends Controller
         $this->validate($request, [
             'name' => 'required|max:255',
             'email' => 'required',
+            'password' => 'required|min:6',
         ]);
-
-        $author = Author::create($request->all());
+        
+        $author = Author::create($request->except('password') + ['password' => Hash::make($request->password)]);
         $author = new Item($author,$this->authorTransformer);
         $author = $this->fractal->createData($author);
         return $author->toArray(); 

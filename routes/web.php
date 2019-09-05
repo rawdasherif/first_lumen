@@ -14,17 +14,19 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+$router->post('login', 'AuthorController@login');
+$router->post('authors', ['uses' => 'AuthorController@store']);
+
 $router->group(['prefix' => 'api','middleware' => 'auth:api'], function () use ($router) {
     $router->get('authors',  ['uses' => 'AuthorController@index']);
   
     $router->get('authors/{id}', ['uses' => 'AuthorController@show']);
   
-    $router->post('authors', ['uses' => 'AuthorController@store']);
-  
     $router->delete('authors/{id}', ['uses' => 'AuthorController@delete']);
   
     $router->put('authors/{id}', ['uses' => 'AuthorController@update']);
-    $router->post('login', 'AuthorController@login');
+    
+    
   });
 
   $router->group(['prefix' => 'api'], function () use ($router) {
