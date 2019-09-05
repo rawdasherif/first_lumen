@@ -1,10 +1,12 @@
 <?php
 
  use Illuminate\Http\UploadedFile;
-
+ use Laravel\Lumen\Testing\WithoutMiddleware;
 
 class ArticalTest extends TestCase
 {
+    use WithoutMiddleware;
+    
     public function testShouldReturnAllArticals(){
         $response=$this->get("api/articals", []);
         $this->assertEquals(200, $this->response->status());

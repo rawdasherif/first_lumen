@@ -1,8 +1,12 @@
 <?php
+use Laravel\Lumen\Testing\WithoutMiddleware;
 
 class AuthorTest extends TestCase
 {
+    use WithoutMiddleware;
+
     public function testShouldReturnAllAuthors(){
+        
         $response=$this->get("api/authors", []);
         $this->assertEquals(200, $this->response->status());
 
