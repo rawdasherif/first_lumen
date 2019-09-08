@@ -167,7 +167,7 @@ class AuthorController extends Controller
      *   operationId="addAuthor",
      *   @OA\RequestBody(
      *       required=true,
-     *       @OA\JsonContent(ref="#/components/schemas/Author")
+ 
      *   ),
      *   @OA\Response(
      *     response=200,
@@ -213,7 +213,7 @@ class AuthorController extends Controller
      *   ),
      *   @OA\RequestBody(
      *       required=true,
-     *       @OA\JsonContent(ref="#/components/schemas/Author")
+
      *   ),
      *   @OA\Response(
      *     response=200,

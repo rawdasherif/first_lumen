@@ -13,6 +13,7 @@ class ArticalTransformer extends TransformerAbstract
 
     public function transform(Artical $artical)
     {
+       
         return [
             
             'main_title' => $artical->main_title,
@@ -25,10 +26,8 @@ class ArticalTransformer extends TransformerAbstract
 
     public function includeAuthor(Artical $artical)
     {
-        if($artical->author !== null)
-        {
+        
+
         return $this->item($artical->author, new AuthorTransformer);
-        }
- 
-      }
+    }
 }

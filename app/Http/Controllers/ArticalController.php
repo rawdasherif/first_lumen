@@ -46,7 +46,8 @@ class ArticalController extends Controller
     {
         $articals=Artical::all();
         $articals = new Collection($articals,$this->articalTransformer); 
-        $this->fractal->parseIncludes('author'); 
+        $this->fractal->parseIncludes('author');
+        // dd($articals);
         $articals = $this->fractal->createData($articals); 
         return $articals->toArray(); 
     }
@@ -94,7 +95,6 @@ class ArticalController extends Controller
      *   operationId="addArticle",
      *   @OA\RequestBody(
      *       required=true,
-     *       @OA\JsonContent(ref="#/components/schemas/Artical")
      *   ),
      *   @OA\Response(
      *     response=200,
@@ -148,7 +148,7 @@ class ArticalController extends Controller
      *   ),
      *   @OA\RequestBody(
      *       required=true,
-     *        @OA\JsonContent(ref="#/components/schemas/Artical")
+
      *   ),
      *   @OA\Response(
      *     response=200,

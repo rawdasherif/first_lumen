@@ -29,14 +29,7 @@
                 "summary": "add new article",
                 "operationId": "addArticle",
                 "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Artical"
-                            }
-                        }
-                    }
+                    "required": true
                 },
                 "responses": {
                     "200": {
@@ -101,14 +94,7 @@
                     }
                 ],
                 "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Artical"
-                            }
-                        }
-                    }
+                    "required": true
                 },
                 "responses": {
                     "200": {
@@ -256,14 +242,7 @@
                     }
                 ],
                 "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Author"
-                            }
-                        }
-                    }
+                    "required": true
                 },
                 "responses": {
                     "200": {
@@ -310,14 +289,7 @@
                 "summary": "add new author",
                 "operationId": "addAuthor",
                 "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Author"
-                            }
-                        }
-                    }
+                    "required": true
                 },
                 "responses": {
                     "200": {
@@ -349,35 +321,6 @@
                     "author_id": {
                         "type": "integer",
                         "format": "int64"
-                    }
-                },
-                "type": "object",
-                "xml": {
-                    "name": "Artical"
-                }
-            },
-            "Author": {
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
-                    },
-                    "github": {
-                        "type": "string"
-                    },
-                    "twitter": {
-                        "type": "string"
-                    },
-                    "location": {
-                        "type": "string"
-                    },
-                    "latest_article_published": {
-                        "type": "string"
                     }
                 },
                 "type": "object",
