@@ -2,24 +2,29 @@
 
  use Illuminate\Http\UploadedFile;
  use Laravel\Lumen\Testing\WithoutMiddleware;
+ use Laravel\Lumen\Testing\DatabaseMigrations;
 
 class ArticalTest extends TestCase
 {
-    use WithoutMiddleware;
+    use WithoutMiddleware,DatabaseMigrations;
     
     public function testShouldReturnAllArticals(){
+        factory('App\Author', 5)->create();
+        factory('App\Artical', 5)->create();
         $response=$this->get("api/articals", []);
         $this->assertEquals(200, $this->response->status());
 
     }
 
     public function testShouldReturnArtical(){
-        $response=$this->get("api/articals/4", []);
+        factory('App\Author')->create();
+        $article = factory('App\Artical')->create();
+        $response=$this->get("api/articals/{$article->id}", []);
         $this->assertEquals(200, $this->response->status());
     }
 
     public function testShouldCreateArtical(){
-        
+        factory('App\Author')->create();
         $artical = factory('App\Artical')->make()->toArray();
         $artical['image'] = UploadedFile::fake()->image('avatar.jpg');
         $response=$this->post("api/articals",$artical);
@@ -28,16 +33,18 @@ class ArticalTest extends TestCase
     }
 
     public function testShouldUpdateArtical(){
-        $artical = factory('App\Artical')->make()->toArray();
+        factory('App\Author')->create();
+        $artical = factory('App\Artical')->create()->toArray();
         $artical['image'] = UploadedFile::fake()->image('avatar.jpg');
-        $response=$this->put("api/articals/3",$artical);
+        $response=$this->put("api/articals/{$artical['id']}",$artical);
         $this->assertEquals(200, $this->response->status());
      
     }
 
     public function testShouldDeleteArtical(){
-        
-        $this->delete("api/articals/4", [], []);
+        factory('App\Author')->create();
+        $article = factory('App\Artical')->create();
+        $this->delete("api/articals/{$article->id}", [], []);
         $this->assertEquals(410, $this->response->status());
     }
    

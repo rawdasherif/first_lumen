@@ -11,6 +11,7 @@ use League\Fractal\Resource\Item;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use App\Transformers\ArticalTransformer;
 
+
 class ArticalController extends Controller
 {
 
@@ -44,12 +45,10 @@ class ArticalController extends Controller
     public function index()
     {
         $articals=Artical::all();
-
-        $articals = new Collection($articals,$this->articalTransformer); // Create a resource collection transformer
+        $articals = new Collection($articals,$this->articalTransformer); 
         $this->fractal->parseIncludes('author'); 
-        $articals = $this->fractal->createData($articals); // Transform data
-
-        return $articals->toArray(); // Get transformed array of data
+        $articals = $this->fractal->createData($articals); 
+        return $articals->toArray(); 
     }
     //----------------------------------------------- 
     /**

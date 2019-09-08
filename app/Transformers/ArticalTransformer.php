@@ -25,6 +25,10 @@ class ArticalTransformer extends TransformerAbstract
 
     public function includeAuthor(Artical $artical)
     {
+        if($artical->author !== null)
+        {
         return $this->item($artical->author, new AuthorTransformer);
-    }
+        }
+ 
+      }
 }
